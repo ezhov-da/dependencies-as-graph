@@ -9,6 +9,8 @@ plugins {
     application
 }
 
+val applicationVersion = "0.0.2"
+
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
@@ -30,7 +32,6 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass.set("ru.ezhov.dependenciesasgraph.AppKt")
-    version = "0.0.1"
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
@@ -39,3 +40,13 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     }
 }
 
+tasks.register("version") {
+    doLast {
+        val resourcesFolder = File("$buildDir/resources/main")
+        File(resourcesFolder, "version").writeText(applicationVersion)
+    }
+}
+
+tasks.getByName("build") {
+    dependsOn.add("version")
+}

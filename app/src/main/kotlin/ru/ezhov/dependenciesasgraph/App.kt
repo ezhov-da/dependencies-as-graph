@@ -17,7 +17,11 @@ import javax.xml.xpath.XPathConstants
 import javax.xml.xpath.XPathFactory
 import kotlin.io.path.name
 
+class A
+
 fun main(args: Array<String>) {
+    printVersion()
+
     val config = try {
         println("config '${args[0]}'")
         JsonConfigParser().parse(args[0])
@@ -36,6 +40,11 @@ fun main(args: Array<String>) {
             dependencies = mapDependencies,
         )
     }
+}
+
+private fun printVersion() {
+    val version = String(A::class.java.getResourceAsStream("/version").readAllBytes())
+    println("version '$version'")
 }
 
 private fun pomXmls(rootFolder: File, maxDepth: Int): List<File> =
